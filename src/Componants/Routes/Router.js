@@ -1,11 +1,6 @@
 import React from "react";
 import Home from "../Pages/Home";
-import {
-  BrowserRouter as Router,
-  Navigate,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import Error from "../Pages/Error";
 import ProtectedRoute from "./ProtectedRoute";
@@ -23,7 +18,7 @@ const Routing = () => {
 
   return (
     <>
-      <Router>
+      <BrowserRouter>
         <Navbar isloggedIn={isloggedIn} usertype={usertype} />
         <Routes>
           {/* unauthorized-------------------- */}
@@ -41,7 +36,7 @@ const Routing = () => {
             <Route path="/product" element={<Product />} />
           </Route>
         </Routes>
-      </Router>
+      </BrowserRouter>
     </>
   );
 };
