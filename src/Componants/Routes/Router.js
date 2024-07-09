@@ -1,7 +1,7 @@
 import React from "react";
 import Home from "../Pages/Home";
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Navigate,
   Route,
   Routes,
