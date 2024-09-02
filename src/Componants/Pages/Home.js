@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Typewriter } from "react-simple-typewriter";
 const Home = () => {
   return (
     <>
@@ -13,7 +13,17 @@ const Home = () => {
           fontSize: "24px",
         }}
       >
-        Welcome
+        <div>
+          <Typewriter
+            words={["Hello, World!", "React Developer", "Auto Typing Effect"]}
+            loop={5}
+            cursor
+            cursorStyle="_"
+            typeSpeed={70}
+            deleteSpeed={50}
+            delaySpeed={1000}
+          />
+        </div>
       </div>
     </>
   );
