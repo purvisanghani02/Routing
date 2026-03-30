@@ -21,3 +21,44 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+--------
+
+Map<String, Integer> uniqueMap = new Map<String, Integer>();
+Integer totalDuplicates = 0;
+
+// Query all Study Intake Histories (or limit if needed)
+List<IEPAUGS__Cue_Study_Intake_History__c> histories = [
+    SELECT Id, CreatedDate,
+        IEPAUGS__Cue_History_Id__c,
+        IEPAUGS__Cue_Study_Id__c,
+        IEPAUGS__Cue_Start_Date__c,
+        IEPAUGS__Cue_End_Date__c,
+        /* include all other fields you want to consider */
+        IEPAUGS__Cue_Engage__c,
+        IEPAUGS__Cue_Finance_Mgmt_Geography__c
+        /* ... add remaining custom fields dynamically if needed */
+    FROM IEPAUGS__Cue_Study_Intake_History__c
+];
+
+for (IEPAUGS__Cue_Study_Intake_History__c h : histories) {
+    List<String> values = new List<String>();
+    Schema.DescribeSObjectResult describeResult = h.getSObjectType().getDescribe();
+    Map<String, Schema.SObjectField> fieldsMap = describeResult.fields.getMap();
+    
+    for (String fieldName : fieldsMap.keySet()) {
+        if (fieldName == 'Id' || fieldName == 'CreatedDate') continue;
+        Object val = h.get(fieldName);
+        values.add(val != null ? String.valueOf(val) : '');
+    }
+    
+    String key = String.join(values, '|');
+    
+    if (!uniqueMap.containsKey(key)) {
+        uniqueMap.put(key, 1); // first record, keep
+    } else {
+        totalDuplicates++; // already exists -> duplicate
+    }
+}
+
+System.debug('Total duplicate records considering all fields: ' + totalDuplicates);
